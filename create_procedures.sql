@@ -1,6 +1,6 @@
 USE iwx;
 /*****************************************************FUNCTIONS*********************************************************/
-
+/*
 DROP FUNCTION IF EXISTS email_exist;
 DELIMITER //
 CREATE FUNCTION email_exist(
@@ -65,9 +65,9 @@ BEGIN
   END IF;
 END //
 DELIMITER ;
-
+*/
 /*******************************************************PROCEDURES*****************************************************************/
-
+/*
 DROP PROCEDURE IF EXISTS GET_PRODUCTS;
 DELIMITER //
 CREATE PROCEDURE GET_PRODUCTS(
@@ -207,16 +207,25 @@ BEGIN
 END //
 DELIMITER ; 
 
--- CALL GET_CUSTOMER_ORDERS(1);
+
+DROP PROCEDURE IF EXISTS GET_STATES;
+DELIMITER //
+CREATE PROCEDURE GET_STATES()
+BEGIN
+  SELECT * FROM iwx.states;
+END // 
+DELIMITER ;
 
 
-/* CALL ADD_ORDER( '{"orderId": 1, 
-  "RRR": 123, 
-  "id": 2, 
-  "amount": 100, 
-  "cart_items":[], 
-  "name": "Hussaini Magaji",
-  "phone": "08168732723",
-  "state": "Sokoto",
-  "lga": "Wamakko",
-  "address": "No. 29 Area 1W, UDUS"}' );*/
+DROP PROCEDURE IF EXISTS GET_LOCAL_GOVERNMENTS;
+DELIMITER //
+CREATE PROCEDURE GET_LOCAL_GOVERNMENTS(
+  state_param VARCHAR(25)
+)
+BEGIN
+  SELECT local_government
+  FROM iwx.localities
+  WHERE REGEXP_SUBSTR(state, state_param) = state_param;
+END //
+DELIMITER ;
+*/

@@ -24,6 +24,10 @@ GRANT SELECT, UPDATE, DELETE -- REVIEW FOR DELETION
 ON iwx.orders
 TO products_and_carts_entry;
 
+GRANT SELECT
+ON iwx.localities
+TO products_and_carts_entry;
+
 GRANT EXECUTE
 ON PROCEDURE iwx.ADD_CUSTOMER
 TO products_and_carts_entry;
@@ -48,6 +52,13 @@ GRANT EXECUTE
 ON PROCEDURE iwx.VERIFY_CUSTOMER
 TO products_and_carts_entry;
 
+GRANT EXECUTE
+ON PROCEDURE iwx.GET_STATES
+TO products_and_carts_entry;
+
+GRANT EXECUTE
+ON PROCEDURE iwx.GET_LOCAL_GOVERNMENTS
+TO products_and_carts_entry;
 
 GRANT products_and_carts_entry TO 'iwx_web_server'@'localhost';
 SET DEFAULT ROLE products_and_carts_entry TO 'iwx_web_server'@'localhost';

@@ -6,6 +6,7 @@
                replecated by any person, organization or company.
    iwx - importWithXarah, All rights reserved.
 */
+/*
 DROP DATABASE IF EXISTS iwx;
 CREATE DATABASE iwx;
 USE iwx;
@@ -19,19 +20,19 @@ CREATE TABLE suppliers (
   supplier_email           VARCHAR(50)    UNIQUE           NOT NULL,
   supplier_phone_number    CHAR(11)       UNIQUE           NOT NULL,
   CONSTRAINT suppliers_pk PRIMARY KEY (supplier_id, supplier_account_number)
-);
-INSERT INTO suppliers /*********************************************************************************************************/
-VALUES (1, '0123456789', 'Yusuf', "Ja'e", 'yusufjae@gmail.com', '07068464632');
+);*/
+-- INSERT INTO suppliers /*********************************************************************************************************/
+-- VALUES (1, '0123456789', 'Yusuf', "Ja'e", 'yusufjae@gmail.com', '07068464632');
 
-
+/*
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
   category_id    INT           PRIMARY KEY   AUTO_INCREMENT,
   category_name  VARCHAR(25)   NOT NULL
-);
-INSERT INTO categories  /*******************************************************************************************************/
-VALUES (1, "FASHION");
-
+);*/
+-- INSERT INTO categories  /*******************************************************************************************************/
+-- VALUES (1, "FASHION");
+/*
 
 DROP TABLE IF EXISTS customers;
 CREATE TABLE customers (
@@ -57,7 +58,7 @@ CREATE TABLE products (
   CONSTRAINT products_fk_categories 
 	FOREIGN KEY (product_category) REFERENCES categories (category_id)
 );
-LOAD DATA INFILE '/storage/emulated/0/IWX2.0.0/iwx_collections/public/data/products.csv'
+LOAD DATA INFILE '/programData/MySQL/MySQL Server 8.0/Uploads/products.csv'
 INTO TABLE products
 FIELDS  TERMINATED BY ','
 		ENCLOSED BY   '"';
@@ -95,3 +96,28 @@ CREATE TABLE sessions (
   expires      INT            UNSIGNED        NOT NULL,
   `data`       MEDIUMTEXT
 );
+
+
+/* A seperate database to reference the current states and local governments in 
+   the Federal Republic of Nigeria. */
+/*   
+   
+DROP TABLE IF EXISTS localities;
+CREATE TABLE localities (
+  serial_number        INT           PRIMARY KEY,
+  local_government     VARCHAR(50),
+  state                VARCHAR(25)
+);
+
+LOAD DATA INFILE '/programData/MySQL/MySQL Server 8.0/Uploads/list_of_local_government_areas_of_nigeria.csv'
+INTO TABLE localities
+FIELDS  TERMINATED BY ','
+		ENCLOSED BY   '"';	
+ 
+ 
+ DROP VIEW IF EXISTS states;
+ CREATE OR REPLACE VIEW states AS 
+   SELECT DISTINCT substring(state, 1, length(state) - 1) AS state
+   FROM iwx.localities
+   ORDER BY state ASC;
+*/
