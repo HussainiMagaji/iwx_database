@@ -121,3 +121,9 @@ FIELDS  TERMINATED BY ','
    FROM iwx.localities
    ORDER BY state ASC;
 */
+DROP TABLE IF EXISTS unverified_users;
+CREATE TABLE unverified_users (
+  user_id    INT            PRIMARY KEY   AUTO_INCREMENT,
+  email      VARCHAR(255)   UNIQUE        NOT NULL,
+  `password` VARCHAR(255)   NOT NULL
+);

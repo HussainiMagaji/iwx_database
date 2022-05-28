@@ -94,7 +94,8 @@ BEGIN
   SELECT product_id       AS id, 
 		 product_image_url AS url,
 		 product_name      AS 'name',
-		 product_price     AS price
+		 product_price     AS price,
+         supplier_id
   FROM iwx.products 
   WHERE product_id = product_id_param;
 END //
@@ -205,9 +206,23 @@ BEGIN
   WHERE customer_id = customer_id_param
   ORDER BY order_date DESC;
 END //
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS GET_SUPPLIER_BY_ID;
+DELIMITER //
+CREATE PROCEDURE GET_SUPPLIER_BY_ID (
+   supplier_id_param INT
+)
+BEGIN
+  SELECT *
+  FROM iwx.suppliers
+  WHERE supplier_id = supplier_id_param;
+END //
 DELIMITER ; 
-
-
+*/
+/************************************************************************************************************/
+/*
 DROP PROCEDURE IF EXISTS GET_STATES;
 DELIMITER //
 CREATE PROCEDURE GET_STATES()
@@ -226,6 +241,71 @@ BEGIN
   SELECT local_government
   FROM iwx.localities
   WHERE REGEXP_SUBSTR(state, state_param) = state_param;
+END //
+DELIMITER ;
+*/
+
+/*
+DROP PROCEDURE IF EXISTS  ADD_UNVERIFIED_USER;
+DELIMITER //
+CREATE PROCEDURE ADD_UNVERIFIED_USER (
+  email_param     VARCHAR(255),
+  password_param  VARCHAR(255)
+)
+BEGIN
+  DECLARE duplicate_entry_for_key TINYINT DEFAULT FALSE;
+
+  START TRANSACTION;
+	BEGIN
+	   DECLARE EXIT HANDLER FOR 1062
+         SET duplicate_entry_for_key = TRUE;
+         
+       INSERT INTO iwx.unverified_users (email, `password`)
+         VALUES (email_param, password_param);
+	END;
+    
+    IF duplicate_entry_for_key = FALSE THEN
+      COMMIT;
+      
+      SELECT * FROM iwx.unverified_users
+	  WHERE email = email_param;
+    
+	ELSE
+      ROLLBACK;
+      
+      SIGNAL SQLSTATE '23000'
+       SET MESSAGE_TEXT = 'Email already exist. Try a different email.',
+           MYSQL_ERRNO  = 1062;
+           
+	END IF;
+END //
+DELIMITER ;
+*/
+
+/*
+DROP PROCEDURE IF EXISTS  GET_UNVERIFIED_USER_BY_ID;
+DELIMITER //
+CREATE PROCEDURE GET_UNVERIFIED_USER_BY_ID (
+  user_id_param INT
+)
+BEGIN 
+  SELECT email, `password`
+  FROM   iwx.unverified_users
+  WHERE  user_id = user_id_param;
+END //
+DELIMITER ;
+*/
+
+/*****************************************************TRIGGERS*************************************************************/
+/*
+DROP TRIGGER IF EXISTS customers_after_insert;
+DELIMITER //
+CREATE TRIGGER customers_after_insert
+  AFTER INSERT ON iwx.customers
+  FOR EACH ROW
+BEGIN
+  DELETE FROM iwx.unverified_users
+  WHERE email = NEW.customer_email;
 END //
 DELIMITER ;
 */
