@@ -1,6 +1,6 @@
 USE iwx;
 /*****************************************************FUNCTIONS*********************************************************/
-/*
+
 DROP FUNCTION IF EXISTS email_exist;
 DELIMITER //
 CREATE FUNCTION email_exist(
@@ -65,9 +65,9 @@ BEGIN
   END IF;
 END //
 DELIMITER ;
-*/
+
 /*******************************************************PROCEDURES*****************************************************************/
-/*
+
 DROP PROCEDURE IF EXISTS GET_PRODUCTS;
 DELIMITER //
 CREATE PROCEDURE GET_PRODUCTS(
@@ -220,9 +220,9 @@ BEGIN
   WHERE supplier_id = supplier_id_param;
 END //
 DELIMITER ; 
-*/
+
 /************************************************************************************************************/
-/*
+
 DROP PROCEDURE IF EXISTS GET_STATES;
 DELIMITER //
 CREATE PROCEDURE GET_STATES()
@@ -243,9 +243,9 @@ BEGIN
   WHERE REGEXP_SUBSTR(state, state_param) = state_param;
 END //
 DELIMITER ;
-*/
 
-/*
+
+
 DROP PROCEDURE IF EXISTS  ADD_UNVERIFIED_USER;
 DELIMITER //
 CREATE PROCEDURE ADD_UNVERIFIED_USER (
@@ -260,9 +260,9 @@ BEGIN
 	WHERE email = email_param;
 END //
 DELIMITER ;
-*/
 
-/*
+
+
 DROP PROCEDURE IF EXISTS  GET_UNVERIFIED_USER_BY_ID;
 DELIMITER //
 CREATE PROCEDURE GET_UNVERIFIED_USER_BY_ID (
@@ -274,9 +274,9 @@ BEGIN
   WHERE  user_id = user_id_param;
 END //
 DELIMITER ;
-*/
 
-/*
+
+
 DROP PROCEDURE IF EXISTS EMAIL_EXIST;
 DELIMITER //
 CREATE PROCEDURE EMAIL_EXIST (
@@ -286,9 +286,9 @@ BEGIN
   SELECT email_exist( email_param ) AS email_exist;
 END //
 DELIMITER ;
-*/
+
 /*****************************************************TRIGGERS*************************************************************/
-/*
+
 DROP TRIGGER IF EXISTS customers_after_insert;
 DELIMITER //
 CREATE TRIGGER customers_after_insert
@@ -298,5 +298,4 @@ BEGIN
   DELETE FROM iwx.unverified_users
   WHERE email = NEW.customer_email;
 END //
-DELIMITER ;
-*/
+DELIMITER;
