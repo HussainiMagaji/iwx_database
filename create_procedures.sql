@@ -298,4 +298,4 @@ BEGIN
   DELETE FROM iwx.unverified_users
   WHERE email = NEW.customer_email;
 END //
-DELIMITER;
+DELIMITER ;
