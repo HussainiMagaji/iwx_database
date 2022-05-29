@@ -99,8 +99,8 @@ CREATE TABLE sessions (
 
 
 /* A seperate database to reference the current states and local governments in 
-   the Federal Republic of Nigeria. */
-/*   
+   the Federal Republic of Nigeria.
+*/
    
 DROP TABLE IF EXISTS localities;
 CREATE TABLE localities (
