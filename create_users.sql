@@ -28,6 +28,22 @@ GRANT SELECT
 ON iwx.localities
 TO products_and_carts_entry;
 
+
+GRANT EXECUTE
+ON PROCEDURE iwx.EMAIL_EXIST
+TO products_and_carts_entry;
+
+
+GRANT EXECUTE
+ON PROCEDURE iwx.ADD_UNVERIFIED_USER
+TO products_and_carts_entry;
+
+
+GRANT EXECUTE
+ON PROCEDURE iwx.GET_UNVERIFIED_USER_BY_ID
+TO products_and_carts_entry;
+
+
 GRANT EXECUTE
 ON PROCEDURE iwx.ADD_CUSTOMER
 TO products_and_carts_entry;
@@ -58,6 +74,10 @@ TO products_and_carts_entry;
 
 GRANT EXECUTE
 ON PROCEDURE iwx.GET_LOCAL_GOVERNMENTS
+TO products_and_carts_entry;
+
+GRANT EXECUTE
+ON PROCEDURE iwx.GET_SUPPLIER_BY_ID
 TO products_and_carts_entry;
 
 GRANT products_and_carts_entry TO 'iwx_web_server'@'localhost';

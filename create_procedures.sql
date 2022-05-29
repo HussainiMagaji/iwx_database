@@ -253,31 +253,11 @@ CREATE PROCEDURE ADD_UNVERIFIED_USER (
   password_param  VARCHAR(255)
 )
 BEGIN
-  DECLARE duplicate_entry_for_key TINYINT DEFAULT FALSE;
-
-  START TRANSACTION;
-	BEGIN
-	   DECLARE EXIT HANDLER FOR 1062
-         SET duplicate_entry_for_key = TRUE;
-         
-       INSERT INTO iwx.unverified_users (email, `password`)
-         VALUES (email_param, password_param);
-	END;
-    
-    IF duplicate_entry_for_key = FALSE THEN
-      COMMIT;
+	INSERT INTO iwx.unverified_users (email, `password`)
+	  VALUES (email_param, password_param);
       
-      SELECT * FROM iwx.unverified_users
-	  WHERE email = email_param;
-    
-	ELSE
-      ROLLBACK;
-      
-      SIGNAL SQLSTATE '23000'
-       SET MESSAGE_TEXT = 'Email already exist. Try a different email.',
-           MYSQL_ERRNO  = 1062;
-           
-	END IF;
+	SELECT * FROM iwx.unverified_users
+	WHERE email = email_param;
 END //
 DELIMITER ;
 */
@@ -296,6 +276,17 @@ END //
 DELIMITER ;
 */
 
+/*
+DROP PROCEDURE IF EXISTS EMAIL_EXIST;
+DELIMITER //
+CREATE PROCEDURE EMAIL_EXIST (
+  email_param VARCHAR(255)
+)
+BEGIN
+  SELECT email_exist( email_param ) AS email_exist;
+END //
+DELIMITER ;
+*/
 /*****************************************************TRIGGERS*************************************************************/
 /*
 DROP TRIGGER IF EXISTS customers_after_insert;
